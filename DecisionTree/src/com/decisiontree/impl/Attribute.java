@@ -6,7 +6,7 @@ import java.util.List;
 import com.decisiontree.Entroy;
 import com.decisiontree.ResultType;
 
-public class Attribute  implements Entroy,ResultType{
+public class Attribute  implements Entroy,ResultType,Comparable{
     private String name;
     private Character[] chs;
     private long count=0;
@@ -34,8 +34,12 @@ public class Attribute  implements Entroy,ResultType{
 	}
 	@Override
 	public double entroy() {
-		return 0;
+		double _r = 0;
+		for(Character e:chs)
+			_r += ((((double)e.getCount())/((double)count))*e.entroy());
+		return _r;
 	}
+	
 	public int addCharacter(String chName){
 		boolean h = false;
 		int index = -1;
@@ -80,5 +84,38 @@ public class Attribute  implements Entroy,ResultType{
         }else{
         	this.result.add(result.copy());
         }
-	}    
+	}
+	@Override
+	public int compareTo(Object o) {
+		double _entroy = ((Attribute)o).entroy();
+		double entroy  = this.entroy();
+        if(_entroy==entroy)
+        	return 0;
+        else if(_entroy<entropy)
+        	return 1;
+        else
+        	return -1;
+	}  
+	
+	public void setChildEntroy(){
+		for(Character c:chs)
+			c.setEntroy(c.entroy());
+	}
+	
+	public Character getCharacterByName(String name){
+		for(int i=0;i<chs.length;i++)
+			if(chs[i].getName().equals(name))
+				return chs[i];
+		return null;
+	}
+	
+	public long getCount() {
+		return count;
+	}
+	public void setCount(long count) {
+		this.count = count;
+	}
+	public void setResult(List<Character> result) {
+		this.result = result;
+	}
 }
