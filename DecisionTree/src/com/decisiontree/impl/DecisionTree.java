@@ -93,7 +93,12 @@ public class DecisionTree implements Entroy,ResultType{
 	    System.out.println("create tree finished... "+(new Date()));
     }
     
-    public void createInterf(List<Attribute> c,List<Attribute> lst){
+    /**
+     * 递归创建决策树
+     * @param c
+     * @param lst
+     */
+    private void createInterf(List<Attribute> c,List<Attribute> lst){
     	List<Attribute> _lst = new ArrayList<Attribute>();
     	for(Attribute k:c){
     		for(Character cd:k.getChs()){
@@ -138,6 +143,9 @@ public class DecisionTree implements Entroy,ResultType{
    		
     }**/
     
+    /**
+     * 将决策树写入到文件当中
+     */
     private void writeOutTree(){
     	
     }
@@ -158,6 +166,11 @@ public class DecisionTree implements Entroy,ResultType{
         }
 	}
 	
+	/**
+	 * 使用训练好的决策树进行测试集的预测
+	 * @param testFile 测试集文件名,默认放在  工作目录/data/test 下.
+	 * @throws FileNotFoundException
+	 */
 	public void judge(String testFile) throws FileNotFoundException{
 		double right=0,this_count=0;
 		File fl = new File(PREFIX_TESTFILE+testFile);
